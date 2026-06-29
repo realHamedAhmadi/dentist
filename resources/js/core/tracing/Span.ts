@@ -22,7 +22,7 @@ export class Span {
                 return result;
             } catch (error) {
                 this.end("error", error);
-                if (isDev()){
+                if (!isProd()){
                     throw error;
                 }
                 return;
