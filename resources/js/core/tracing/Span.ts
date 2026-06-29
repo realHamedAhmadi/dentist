@@ -1,5 +1,5 @@
 import {ISpanContext, ISpanRecord, SpanStatus} from "./types";
-import { Tracer } from "./tracer";
+import { Tracer } from "./Tracer";
 import {Logger} from "@/core/facades/Logger";
 import {isProd} from "@/core/config/env";
 
