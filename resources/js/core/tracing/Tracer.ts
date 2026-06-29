@@ -8,7 +8,7 @@ import {
     ITraceOptions,
 } from "./types";
 import { TraceContextStore } from "./TraceContextStore";
-import { Span } from "./span";
+import { Span } from "./Span";
 
 const DEFAULT_OPTIONS: Required<ITraceOptions> = {
     traceIdLength: 16,
