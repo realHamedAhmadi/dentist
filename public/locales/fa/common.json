@@ -1,0 +1,66 @@
+{
+    "actions": {
+        "save": "Save",
+        "submit": "ثبت",
+        "edit": "Edit",
+        "update": "به\u200Cروزرسانی",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "delete": "Delete",
+        "destroy": "Destroy",
+        "show": "Show",
+        "approve": "Approve",
+        "ok": "Ok",
+        "done": "Done",
+        "create": "Create",
+        "add": "Add",
+        "change": "Change",
+        "resend": "ارسال دوباره",
+        "verify": "تایید",
+        "verifying": "تایید...",
+        "checking": "بررسی..."
+    },
+    "status": {
+        "loading": "loading...",
+        "error": "Something went wrong"
+    },
+    "form": {
+        "fields": {
+            "active": "وضعیت فعال بودن",
+            "name": "نام",
+            "firstName": "نام",
+            "lastName": "نام خانوادگی",
+            "MiddleName": "Middle name",
+            "title": "عنوان",
+            "phone": "شماره همراه",
+            "tel": "شماره تلفن",
+            "email": "ایمیل",
+            "birthDate": "تاریخ تولد",
+            "username": "نام کاربری",
+            "gender": "جنسیت",
+            "bloodGroup": "گروه خونی",
+            "nationalCode": "کد ملی",
+            "password": "رمز عبور",
+            "passwordConfirmation": "تایید رمز عبور",
+            "male": "آقا",
+            "female": "خانم",
+            "single": "مجرد",
+            "married": "متاهل",
+            "VerificationCode": "کد تایید"
+        },
+        "validation": {
+            "required": "This Field is required."
+        },
+        "validation.attr": {
+            "required": "The {{attr}} field is required."
+        },
+        "placeholders": {
+            "search": "Search..."
+        }
+    },
+    "messages": {
+        "createSuccess": "Created successfully",
+        "updateSuccess": "Updated successfully",
+        "deleteSuccess": "Deleted successfully"
+    }
+}

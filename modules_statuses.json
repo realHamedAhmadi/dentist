@@ -1,0 +1,8 @@
+{
+    "User": true,
+    "Service": true,
+    "Core": true,
+    "Setting": true,
+    "Auth": true,
+    "Verification": true
+}

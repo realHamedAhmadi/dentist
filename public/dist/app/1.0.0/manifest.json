@@ -1,0 +1,68 @@
+{
+  "_Button-C0JISJGF.esm.js": {
+    "file": "Button-C0JISJGF.esm.js",
+    "name": "Button",
+    "imports": [
+      "_vendor-CtEoHv3f.esm.js",
+      "resources/js/admin/main.tsx"
+    ]
+  },
+  "_browser-ponyfill-6GbyDYf6.esm.js": {
+    "file": "browser-ponyfill-6GbyDYf6.esm.js",
+    "name": "browser-ponyfill",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-CtEoHv3f.esm.js"
+    ]
+  },
+  "_vendor-CtEoHv3f.esm.js": {
+    "file": "vendor-CtEoHv3f.esm.js",
+    "name": "vendor"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-M45Yl0IJ.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/admin/main.tsx": {
+    "file": "main-DSnO_n69.esm.js",
+    "name": "main",
+    "src": "resources/js/admin/main.tsx",
+    "isEntry": true,
+    "imports": [
+      "_vendor-CtEoHv3f.esm.js"
+    ],
+    "dynamicImports": [
+      "_browser-ponyfill-6GbyDYf6.esm.js",
+      "resources/js/plugins/client/admin/pages/IndexPage.tsx",
+      "resources/js/plugins/client/admin/pages/createPage.tsx",
+      "resources/js/plugins/client/admin/pages/IndexPage.tsx"
+    ]
+  },
+  "resources/js/plugins/client/admin/pages/IndexPage.tsx": {
+    "file": "IndexPage-BD9hl0FH.esm.js",
+    "name": "IndexPage",
+    "src": "resources/js/plugins/client/admin/pages/IndexPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-CtEoHv3f.esm.js",
+      "resources/js/admin/main.tsx",
+      "_Button-C0JISJGF.esm.js"
+    ]
+  },
+  "resources/js/plugins/client/admin/pages/createPage.tsx": {
+    "file": "createPage-EPbkIAHx.esm.js",
+    "name": "createPage",
+    "src": "resources/js/plugins/client/admin/pages/createPage.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-CtEoHv3f.esm.js",
+      "resources/js/admin/main.tsx",
+      "_Button-C0JISJGF.esm.js"
+    ]
+  }
+}

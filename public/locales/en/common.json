@@ -1,0 +1,47 @@
+{
+    "actions": {
+        "save": "Save",
+        "edit": "Edit",
+        "update": "Update",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "delete": "Delete",
+        "destroy": "Destroy",
+        "show": "Show",
+        "approve": "Approve",
+        "ok": "Ok",
+        "done": "Done",
+        "create": "Create",
+        "add": "Add",
+        "change": "Change"
+    },
+    "status": {
+        "loading": "loading...",
+        "error": "Something went wrong"
+    },
+    "form": {
+        "fields": {
+            "name": "Name",
+            "firstName": "First name",
+            "lastName": "Last name",
+            "MiddleName": "Middle name",
+            "title": "Title",
+            "phone": "Phone",
+            "email": "Email",
+            "username": "Username"
+        },
+        "validation": {
+            "required": "This Field is required."
+        },"validation.attr": {
+            "required": "The {{attr}} field is required."
+        },
+        "placeholders": {
+            "search": "Search..."
+        }
+    },
+    "messages": {
+        "createSuccess": "Created successfully",
+        "updateSuccess": "Updated successfully",
+        "deleteSuccess": "Deleted successfully",
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "form": {
+        "fields": {
+            "referenceFileNumber": "شماره پرونده ارجاعی",
+            "physicalFileNumber": "شماره پرونده کاغذی",
+            "phone": "شماره همراه",
+            "tel": "شماره تلفن",
+            "email": "ایمیل",
+            "birthDate": "تاریخ تولد",
+            "username": "نام کاربری",
+            "gender": "جنسیت",
+            "bloodGroup": "گروه خونی",
+            "nationalCode": "کد ملی",
+            "password": "رمز عبور",
+            "passwordConfirmation": "تایید رمز عبور",
+            "male": "آقا",
+            "female": "خانم",
+            "single": "مجرد",
+            "fatherName": "نام پدر",
+            "education": "تحصیلات",
+            "job": "شغل",
+            "married": "وضعیت تاهل",
+            "pregnant": "باردار است",
+            "systemicDisease": "بیماری سیستمی",
+            "diseaseDescription": "شرح بیماری",
+            "address": "آدرس",
+            "postalCode": "کد پستی",
+            "notes": "یادداشت",
+            "VerificationCodeNeeded": "نیاز به کد تایید",
+            "VerificationCode": "کد تایید",
+            "redirect": "ثبت و انتقال به پرونده پزشکلی"
+        }
+    },
+    "actions": {
+        "submit": "ثبت",
+        "update": "به\u200Cروزرسانی"
+    }
+}
