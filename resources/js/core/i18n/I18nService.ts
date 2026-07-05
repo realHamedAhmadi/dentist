@@ -20,6 +20,7 @@ import type {
 import { DEFAULT_I18N_STORAGE_KEY } from './defaults'
 import {isProd} from "@/core/config/env";
 import {Logger} from "@/core/facades/Logger";
+import {IEvent} from "@/core/platform/event/Event";
 
 /**
  * Main i18n application service (orchestrator).
@@ -86,6 +87,22 @@ export class I18nService {
      */
     getLanguage(): string {
         return this.i18n.language || getDefaultLanguage()
+    }
+
+    /**
+     * Subscribe to language changed notifications.
+     */
+    onLanguageChanged(listener: (payload: I18nLangChangedPayload) => void): () => void {
+        const handler = (event:IEvent) => {
+            const payload=event.payload as I18nLangChangedPayload
+            listener(payload)
+        }
+
+        this.eventBus.on(I18nEvents.I18nLangChanged, handler)
+
+        return () => {
+            this.eventBus.off(I18nEvents.I18nLangChanged, handler)
+        }
     }
 
     /**

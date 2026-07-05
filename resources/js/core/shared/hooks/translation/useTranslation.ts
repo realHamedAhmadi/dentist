@@ -1,51 +1,44 @@
 import React from 'react'
-import { getApp } from '@/core/shared/store/useAppStore'
-import { I18nService } from '@/core/i18n/I18nService'
+import type { UseTranslationOptions } from '@/core/i18n/types'
+import type { UseTranslationResult } from '@/core/i18n/useTranslation.types'
+import {
+    addLanguageStoreListener,
+    getLanguageStoreServerSnapshot,
+    getLanguageStoreSnapshot,
+    removeLanguageStoreListener,
+} from '@/core/i18n/useTranslation.cache'
+import { ensureLanguageChangeBridge } from '@/core/i18n/useTranslation.bridge'
+import { readCurrentLanguage, readTranslationResource } from '@/core/i18n/useTranslation.resource'
 
 /**
- * React-safe translation hook using async I18nService.useTranslation.
+ * Subscribe React to language store version updates.
  */
-export function useTranslation(signature: string,options={}) {
-    const [t, setT] = React.useState<(key: string, options?: any) => string>(() => (key) => key)
-    const [ready, setReady] = React.useState(false)
-    const [error, setError] = React.useState<Error | null>(null)
+function subscribeLanguageStore(listener: () => void): () => void {
+    addLanguageStoreListener(listener)
 
-    React.useEffect(() => {
-        // Ignore stale async results after unmount/signature change
-        let cancelled = false
+    // Bind language bridge lazily on first subscription
+    void ensureLanguageChangeBridge()
 
-        /**
-         * Load translation function from service.
-         */
-        const load = async () => {
-            try {
-                setReady(false)
-                setError(null)
+    return () => {
+        // Remove listener during unmount
+        removeLanguageStoreListener(listener)
+    }
+}
 
-                const app = getApp()
-                if (!app) throw new Error('Application container is not available')
+/**
+ * React translation hook with Suspense behavior similar to react-i18next.
+ */
+export function useTranslation(
+    signature: string,
+    options?: UseTranslationOptions,
+): UseTranslationResult {
+    React.useSyncExternalStore(
+        subscribeLanguageStore,
+        getLanguageStoreSnapshot,
+        getLanguageStoreServerSnapshot,
+    )
 
-                const i18n = await app.make(I18nService)
-                const result = await i18n.useTranslation(signature)
+    const lang = readCurrentLanguage(options)
 
-                if (!cancelled) {
-                    setT(() => result.t as (key: string, options?: any) => string)
-                    setReady(result.ready)
-                }
-            } catch (err) {
-                if (!cancelled) {
-                    setError(err as Error)
-                    setReady(false)
-                }
-            }
-        }
-
-        void load()
-
-        return () => {
-            cancelled = true
-        }
-    }, [signature])
-
-    return { t, ready, error }
+    return readTranslationResource(signature, lang, options)
 }

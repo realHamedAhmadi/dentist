@@ -10,11 +10,11 @@ export class Application extends Container implements IApplication {
     protected lang = 'en';
     protected version = '1.0.0';
 
-    protected readonly plugins: PluginRegistry;
+    public readonly plugins: PluginRegistry;
     protected providers = new Set<ServiceProviderConstructor>();
 
     constructor(
-        readonly public type,
+        protected readonly type:string,
         public config?: object
     ) {
         super();

@@ -37,7 +37,7 @@ const sections = (trans) => [
 ]
 
 const LinkList = () => {
-    const {t}=useCoreTranslation('admin')
+    const {t}=useCoreTranslation('common')
     const renderer=useSlotRenderer();
     return (
         <List>
