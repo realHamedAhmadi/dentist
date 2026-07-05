@@ -3,6 +3,9 @@
         "fields": {
             "referenceFileNumber": "شماره پرونده ارجاعی",
             "physicalFileNumber": "شماره پرونده کاغذی",
+            "active": "وضعیت فعال بودن",
+            "firstName": "نام",
+            "lastName": "نام خانوادگی",
             "phone": "شماره همراه",
             "tel": "شماره تلفن",
             "email": "ایمیل",

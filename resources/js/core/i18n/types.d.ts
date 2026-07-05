@@ -27,13 +27,29 @@ export interface I18nNamespaceManifest {
     loaders: Partial<Record<ILanguage, LocaleLoader>>
 }
 
+export interface UseTranslationOptions {
+    lang?:ILanguage['lang']
+    keyPrefix?: string
+}
+
 export interface I18nNamespaceRegisteredPayload {
+    module:string
     namespace:I18nNamespaceManifest['namespace'],
+    lang:ILanguage['lang'],
+    basePath:string,
 }
 
 export interface I18nLangChangedPayload {
     lang:ILanguage['lang'],
     dir:Direction
+}
+
+export interface I18nNamespaceLoadFailedPayload {
+    module:string
+    namespace:I18nNamespaceManifest['namespace']
+    lang:ILanguage['lang']
+    basePath:string
+    error:{ message: string } | null
 }
 
 import type { TFunction } from 'i18next'

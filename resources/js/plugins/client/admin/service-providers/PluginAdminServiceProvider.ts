@@ -18,12 +18,11 @@ export class PluginAdminServiceProvider extends ServiceProvider {
         this.app.make(CommandBus).register('entity.create',()=>{
             console.log('command is handler..........................................')
         })
-
         const i18nService=await this.app.make(I18nService);
         i18nService.registerModuleNamespace({
             module:'client',
             namespace:'common',
-            basePath:'/dist/plugins/client/1.0.0/'
+            basePath:'http://localhost:5173/dist/app/1.0.0/'
         })
     }
 }

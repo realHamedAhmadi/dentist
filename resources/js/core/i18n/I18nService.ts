@@ -7,8 +7,8 @@ import {
 } from '@/core/i18n/language'
 import { I18nEvents } from '@/core/platform/tokens/i18n'
 import type {
-    I18nLangChangedPayload,
-    I18nNamespaceRegisteredPayload,
+    I18nLangChangedPayload, I18nNamespaceLoadFailedPayload,
+    I18nNamespaceRegisteredPayload, UseTranslationOptions,
 } from '@/core/i18n/types'
 import type { IApplication } from '@/core/platform/application/types'
 import type {
@@ -18,6 +18,8 @@ import type {
     IUseTranslationResult,
 } from './types'
 import { DEFAULT_I18N_STORAGE_KEY } from './defaults'
+import {isProd} from "@/core/config/env";
+import {Logger} from "@/core/facades/Logger";
 
 /**
  * Main i18n application service (orchestrator).
@@ -57,12 +59,12 @@ export class I18nService {
     /**
      * Resolve translation function by module:namespace.
      */
-    async useTranslation(signature: string): Promise<IUseTranslationResult> {
+    async useTranslation(signature: string,options?:UseTranslationOptions): Promise<IUseTranslationResult> {
         const { moduleName, namespace } = this.parseSignature(signature)
         await this.ensureLoaded(moduleName, namespace)
-
+        const lang=options?.lang??this.getLanguage();
         // Return fixed namespace translator
-        const t: TFunction = this.i18n.getFixedT(this.getLanguage(), namespace)
+        const t: TFunction = this.i18n.getFixedT(lang, namespace,options?.keyPrefix)
         return { t, ready: true }
     }
 
@@ -87,43 +89,68 @@ export class I18nService {
     }
 
     /**
-     * Ensure module namespace is loaded.
+     * Ensure translation namespace is loaded for the current language.
      */
     private async ensureLoaded(moduleName: string, namespace: string): Promise<void> {
         const entry = this.registry.get(moduleName)
-        if (!entry) throw new Error(`Module not found: ${moduleName}`)
-        if (!entry.namespaces.has(namespace)) {
-            throw new Error(`Namespace "${namespace}" is not registered under module "${moduleName}"`)
-        }
-
         const lang = this.getLanguage()
         const bundleKey = `${moduleName}:${namespace}:${lang}`
 
-        if (this.loadedBundles.has(bundleKey) || this.i18n.hasResourceBundle(lang, namespace)) {
-            return
-        }
-
         try {
+            // Validate module existence
+            if (!entry) {
+                throw new Error(`Module not found: ${moduleName}`)
+            }
+
+            // Validate namespace registration
+            if (!entry.namespaces.has(namespace)) {
+                throw new Error(`Namespace "${namespace}" is not registered under module "${moduleName}"`)
+            }
+
+            // Skip if already loaded
+            if (this.loadedBundles.has(bundleKey) || this.i18n.hasResourceBundle(lang, namespace)) {
+                return
+            }
+
             // Load and attach resource bundle
             const data = await this.loader.load(entry.basePath, lang, namespace)
             this.i18n.addResourceBundle(lang, namespace, data, true, true)
             this.loadedBundles.add(bundleKey)
 
-            const payload: I18nNamespaceRegisteredPayload = { namespace }
-            await Promise.resolve(this.eventBus.emit(I18nEvents.I18nNamespaceRegistered, payload))
-        } catch (error) {
+            const payload: I18nNamespaceRegisteredPayload = {
+                module: moduleName,
+                namespace,
+                lang,
+                basePath: entry.basePath,
+            }
+
             await Promise.resolve(
-                this.eventBus.emit('i18n.namespace.load_failed', {
-                    module: moduleName,
-                    namespace,
-                    language: lang,
-                    basePath: entry.basePath,
-                    error: this.serializeError(error),
-                })
+                this.eventBus.emit(I18nEvents.I18nNamespaceRegistered, payload)
             )
-            throw error
+        } catch (error: unknown) {
+            const serialized = this.serializeError(error)
+            const fallbackMessage = `Failed to ensure i18n namespace "${namespace}" for module "${moduleName}" and lang "${lang}"`
+
+            const payload: I18nNamespaceLoadFailedPayload = {
+                module: moduleName,
+                namespace,
+                lang,
+                basePath: entry?.basePath ?? '',
+                error: serialized ?? { message: fallbackMessage },
+            }
+
+            await Promise.resolve(
+                this.eventBus.emit(I18nEvents.I18nNamespaceLoadFailed, payload)
+            )
+
+            if (!isProd()) {
+                throw error
+            }
+
+            Logger.channel('I18n:service').error(serialized?.message || fallbackMessage, __location__)
         }
     }
+
 
     /**
      * Parse "module:namespace" signature.

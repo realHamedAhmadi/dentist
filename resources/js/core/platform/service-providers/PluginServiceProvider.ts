@@ -6,7 +6,7 @@ export class PluginServiceProvider extends ServiceProvider {
      async register(): Promise<void> {
          //await this.discovery();
         const modules = import.meta.glob(
-            `@/Plugins/**/Plugin*ServiceProvider.ts`,
+            `@/plugins/**/Plugin*ServiceProvider.ts`,
             { eager: true }
         );
         for (const path in modules) {

@@ -37,7 +37,7 @@ export default function createPage() {
     const gridSize_ = gridSize;
     const doubleGridSize = {xs: 12, sm: 12, md: 6, lg: 6}
     const {t: tAdmin} = useTranslation('admin', {keyPrefix: 'clients.form'})
-    const {t: tCommon} = useClientTranslation('common',{keyPrefix: 'clients.form'})
+    const {t: tCommon} = useClientTranslation('common')
     const TextField = ({name, label, type = 'text', gridSize = gridSize_, otherProps = {}}) => {
         return <ResponsiveTextField
             gridSize={gridSize}
