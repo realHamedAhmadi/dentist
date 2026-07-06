@@ -2,6 +2,8 @@
 
 use Modules\Core\Models\DevSetting;
 use Modules\Core\Enums\CalendarType;
+use Illuminate\Support\Facades\File;
+
 
 if (!function_exists('toGregorian')) {
     function toGregorian($date, $format = 'Y-m-d'): ?string
@@ -56,4 +58,45 @@ if (!function_exists('getVersionResponseClass')) {
         return "Modules\\Core\\Http\\Responses\\Api\\{$v}\\VersionResponse";
     }
 }
+
+
+/**
+ * Returns latest plugin remote entry paths.
+ */
+function latestPluginRemoteEntries(): array
+{
+    $basePath = public_path('dist/plugins');
+
+    if (!File::isDirectory($basePath)) {
+        return [];
+    }
+
+    $entries = [];
+
+    foreach (File::directories($basePath) as $pluginDirectory) {
+        $pluginName = basename($pluginDirectory);
+        $versions = array_map('basename', File::directories($pluginDirectory));
+
+        if (empty($versions)) {
+            continue;
+        }
+
+        usort($versions, static function (string $a, string $b): int {
+            // Sort versions descending
+            return version_compare($b, $a);
+        });
+
+        $latestVersion = $versions[0];
+        $remoteEntry = $pluginDirectory . DIRECTORY_SEPARATOR . $latestVersion . DIRECTORY_SEPARATOR . 'remoteEntry.js';
+
+        if (!File::exists($remoteEntry)) {
+            continue;
+        }
+
+        $entries[] = 'dist/plugins/' . $pluginName . '/' . $latestVersion . '/remoteEntry.js';
+    }
+
+    return $entries;
+}
+
 
