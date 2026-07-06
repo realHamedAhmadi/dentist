@@ -1,74 +1,136 @@
-import {PluginActivationType, PluginManifest, PluginMetadata} from "@/core/platform/plugin/types";
+import {
+    PluginActivationType,
+    PluginManifest,
+    PluginMetadata,
+    IServiceProvider
+} from "@/core/platform/plugin/types";
+import {DevLogger} from "@/core/facades/DevLogger";
 
+/**
+ * Registry responsible for managing the lifecycle of plugins.
+ * Handles registration, dependency validation, and activation.
+ */
 export class PluginRegistry {
-    // We use a Map to keep O(1) access time by plugin ID
-    private plugins: Map<string, PluginMetadata> = new Map();
+    /**
+     * Internal store for plugin metadata, indexed by plugin name.
+     */
+    private readonly plugins: Map<string, PluginMetadata> = new Map();
 
     /**
-     * Registers a plugin into the registry.
-     * Performs dependency validation before accepting the plugin.
+     * Registers a plugin and prepares it for activation.
+     *
+     * @param manifest - The plugin's manifest configuration.
+     * @param provider - The instantiated plugin provider (remote module).
+     * @param path - Filesystem or build directory path.
+     * @param port - Development server port.
      */
-    public register(manifest: PluginManifest, provider: any, path: string): void {
-        if (this.plugins.has(manifest.id)) {
-            console.warn(`Plugin ${manifest.id} is already registered.`);
+    public register(
+        manifest: PluginManifest,
+        provider: IServiceProvider,
+        path: string,
+        port: number
+    ): void {
+        // Use name as the unique identifier
+        if (this.plugins.has(manifest.name)) {
+            DevLogger.channel('Plugin:registry').warn(`Plugin "${manifest.name}" is already registered.`);
             return;
         }
 
-        // 1. Dependency Validation (The nerd part 🤓)
+        // Validate if all required dependencies are present
         this.validateDependencies(manifest);
 
-        // 2. Wrap into Metadata
+        // Construct metadata with runtime state
         const metadata: PluginMetadata = {
             ...manifest,
-            provider: provider,
-            enabled: true, // Default to enabled
-            booted:false,
-            path: path
+            provider,
+            path,
+            port,
+            enabled: true,
+            booted: false,
         };
 
-        this.plugins.set(manifest.id, metadata);
-        console.log(`Plugin ${manifest.id} registered successfully.`);
+        this.plugins.set(manifest.name, metadata);
+
+        // Potential for Event Bus trigger here: 'plugin:registered'
+        DevLogger.channel('Plugin:registry').info(`Plugin "${manifest.name}" registered.`);
     }
 
+    /**
+     * Validates that all required dependencies for a plugin are already registered.
+     */
     private validateDependencies(manifest: PluginManifest): void {
         const required = manifest.dependencies?.required;
         if (!required) return;
 
-        for (const [id, version] of Object.entries(required)) {
-            const dependency = this.plugins.get(id);
-            if (!dependency) {
-                throw new Error(`Plugin ${manifest.id} requires ${id}@${version}, but it is not installed.`);
+        for (const [depName, version] of Object.entries(required)) {
+            if (!this.plugins.has(depName)) {
+                throw new Error(
+                    `Dependency Error: Plugin "${manifest.name}" requires "${depName}" (@${version}), but it is missing.`
+                );
             }
-            // Add SemVer comparison logic here if needed
+            // Implementation of SemVer comparison could be added here
         }
     }
 
     /**
-     * Boots plugins based on their activation strategy.
+     * Boots all registered plugins that match a specific activation strategy.
+     *
+     * @param activation - The activation strategy to filter by (e.g., 'eager').
      */
-    public bootPlugins(activation: PluginActivationType): void {
-        for (const plugin of this.plugins.values()) {
-            this.boot(plugin.id,activation)
+    public async bootPlugins(activation: PluginActivationType): Promise<void> {
+        const targets = this.all().filter(p => p.activation === activation);
+
+        for (const plugin of targets) {
+            await this.boot(plugin);
         }
     }
 
-    public boot(plugin:string | PluginMetadata, activation?: PluginActivationType): void {
-        if (typeof plugin==='string'){
-            plugin=this.get(plugin);
+    /**
+     * Triggers the boot sequence for a specific plugin.
+     *
+     * @param plugin - Plugin name or metadata object.
+     * @param activation - Optional filter to match activation strategy.
+     */
+    public async boot(
+        plugin: string | PluginMetadata,
+        activation?: PluginActivationType
+    ): Promise<void> {
+        const metadata = typeof plugin === 'string' ? this.get(plugin) : plugin;
+
+        if (!metadata) {
+            DevLogger.channel('Plugin:registry').error(`Plugin boot failed: Plugin not found.`);
+            return;
         }
-        if ((activation && plugin.activation === activation) && plugin.enabled && !plugin.booted) {
-            // Assuming the provider has a 'boot' method
-            if (typeof plugin.provider.boot === 'function') {
-                plugin.provider.boot();
-                plugin.booted=true;
+
+        // Check if plugin is eligible for booting
+        const matchesActivation = activation ? metadata.activation === activation : true;
+        const canBoot = metadata.enabled && !metadata.booted && matchesActivation;
+
+        if (canBoot) {
+            try {
+                // Execute boot method if provided by the plugin implementation
+                if (typeof metadata.provider.boot === 'function') {
+                    await metadata.provider.boot();
+                }
+
+                metadata.booted = true;
+                // Potential for Event Bus trigger here: 'plugin:booted'
+            } catch (error) {
+                DevLogger.channel('Plugin:registry').error(`Failed to boot plugin "${metadata.name}":`, error);
             }
         }
     }
 
-    public get(pluginId:string):PluginMetadata {
-        return this.plugins.get(pluginId)
+    /**
+     * Retrieves a plugin's metadata by its name.
+     */
+    public get(pluginName: string): PluginMetadata | undefined {
+        return this.plugins.get(pluginName);
     }
 
+    /**
+     * Returns an array of all registered plugins.
+     */
     public all(): PluginMetadata[] {
         return Array.from(this.plugins.values());
     }
