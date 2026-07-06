@@ -5,6 +5,7 @@ import {
     IServiceProvider
 } from "@/core/platform/plugin/types";
 import {DevLogger} from "@/core/facades/DevLogger";
+import {Logger} from "@/core/facades/Logger";
 
 /**
  * Registry responsible for managing the lifecycle of plugins.
@@ -98,7 +99,7 @@ export class PluginRegistry {
         const metadata = typeof plugin === 'string' ? this.get(plugin) : plugin;
 
         if (!metadata) {
-            DevLogger.channel('Plugin:registry').error(`Plugin boot failed: Plugin not found.`);
+            Logger.channel('Plugin:registry').error(`Plugin boot failed: Plugin not found.`,__location__);
             return;
         }
 
@@ -116,7 +117,7 @@ export class PluginRegistry {
                 metadata.booted = true;
                 // Potential for Event Bus trigger here: 'plugin:booted'
             } catch (error) {
-                DevLogger.channel('Plugin:registry').error(`Failed to boot plugin "${metadata.name}":`, error);
+                Logger.channel('Plugin:registry').error(`Failed to boot plugin "${metadata.name}":`, {error,__location__});
             }
         }
     }
