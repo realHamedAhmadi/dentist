@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\App;
 use Modules\Core\Models\DevSetting;
 use Modules\Core\Enums\CalendarType;
 use Illuminate\Support\Facades\File;
@@ -61,12 +61,21 @@ if (!function_exists('getVersionResponseClass')) {
 
 
 /**
- * Returns latest plugin remote entry paths.
- */
-/**
- * Returns latest plugin remote entries keyed by plugin name.
+ * Returns module federation remote entries for the current environment.
  */
 function latestPluginRemoteEntries(): array
+{
+    if (App::environment('local')) {
+        return config('module-federation.dev_remotes', []);
+    }
+
+    return discoverProductionPluginRemoteEntries();
+}
+
+/**
+ * Discovers latest production plugin remote entries from dist/plugins.
+ */
+function discoverProductionPluginRemoteEntries(): array
 {
     $basePath = public_path('dist/plugins');
 
