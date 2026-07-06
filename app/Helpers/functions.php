@@ -63,6 +63,9 @@ if (!function_exists('getVersionResponseClass')) {
 /**
  * Returns latest plugin remote entry paths.
  */
+/**
+ * Returns latest plugin remote entries keyed by plugin name.
+ */
 function latestPluginRemoteEntries(): array
 {
     $basePath = public_path('dist/plugins');
@@ -82,7 +85,7 @@ function latestPluginRemoteEntries(): array
         }
 
         usort($versions, static function (string $a, string $b): int {
-            // Sort versions descending
+            // Sort versions in descending order
             return version_compare($b, $a);
         });
 
@@ -93,7 +96,10 @@ function latestPluginRemoteEntries(): array
             continue;
         }
 
-        $entries[] = 'dist/plugins/' . $pluginName . '/' . $latestVersion . '/remoteEntry.js';
+        $entries[$pluginName] = [
+            'entry' => 'dist/plugins/' . $pluginName . '/' . $latestVersion . '/remoteEntry.js',
+            'version' => $latestVersion,
+        ];
     }
 
     return $entries;
