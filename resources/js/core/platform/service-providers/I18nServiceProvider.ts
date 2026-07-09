@@ -45,8 +45,8 @@ export class I18nServiceProvider extends ServiceProvider {
         await i18nService.init()
         i18nService.registerModuleNamespace({
             module:'core',
-            namespace:'common',
-            basePath:'http://localhost:5173/dist/app/1.0.0'
+            namespace:'sidebar',
+            basePath:'http://localhost:5173/dist/app/admin/1.0.0'
         })
     }
 }

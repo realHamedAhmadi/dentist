@@ -1,0 +1,14 @@
+{
+    "sections": {
+        "dashboard": "داشبورد",
+        "users": "کاربران",
+        "orders": "خدمات"
+    },
+    "users": {
+        "clients.index": "بیماران"
+    },
+    "orders": {
+        "orders.index": "لیست خدمات",
+        "orders.create": "پرونده پزشکی"
+    }
+}
