@@ -58,4 +58,8 @@ export class Application extends Container implements IApplication {
     setLang(lang: string): void {
         this.lang=lang
     }
+
+    getType() {
+        return this.type;
+    }
 }

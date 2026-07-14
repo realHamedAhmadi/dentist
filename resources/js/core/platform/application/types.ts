@@ -15,6 +15,8 @@ export type AppType= 'admin' | 'client'
 export interface IApplication extends IContainer{
     readonly plugins: PluginRegistry;
 
+    getType():string
+
     getLang():string
 
     setLang(lang:string):void

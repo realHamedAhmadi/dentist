@@ -6,12 +6,13 @@ import {clientAdminSidebar} from "@/plugins/client/admin/extensions/clientAdminS
 import {CommandBus} from "@/core/platform/command/CommandBus";
 import {I18nService} from "@/core/i18n/I18nService";
 
-export class PluginAdminServiceProvider extends ServiceProvider {
+export default class PluginAdminServiceProvider extends ServiceProvider {
     register(): void {
 
     }
 
     async boot() {
+        console.log(SlotRegistry,CommandBus,I18nService)
         Router.addRoutes(routes)
         this.app.make(SlotRegistry).extend('admin.sidebar',clientAdminSidebar)
 

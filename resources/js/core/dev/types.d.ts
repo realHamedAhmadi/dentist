@@ -1,7 +1,4 @@
 import {PluginActivationType, PluginDependencies} from "@/core/platform/plugin/types";
-
-export type BuildTarget = 'admin' | 'client';
-
 /**
  * Package.json plugin-specific metadata.
  */

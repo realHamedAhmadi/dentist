@@ -11,24 +11,24 @@ import {useCoreTranslation} from "@/core/shared/hooks/translation/useCoreTransla
 
 const sections = (trans) => [
     /* {
-         title: trans('sidebar.sections.users'),
+         title: trans('sections.users'),
          links: [
              {
-                 text: trans('sidebar.users.clients.index'),
+                 text: trans('users.clients.index'),
                  to: "/admin/clients",
                  //component: () => import('@/admin/features/client/IndexPage'),
              }
          ]
      },*/
     {
-        title: trans('sidebar.sections.orders'),
+        title: trans('sections.orders'),
         links: [
             {
-                text: trans('sidebar.orders.orders.create'),
+                text: trans('orders.orders.create'),
                 to: "/admin/orders/create",
                 //component: () => import('@/plugins/order/admin/pages/CreatePage'),
             }, {
-                text: trans('sidebar.orders.orders.index'),
+                text: trans('orders.orders.index'),
                 to: "/admin/orders",
                 //component: () => import('@/plugins/order/admin/pages/order'),
             },
@@ -37,7 +37,7 @@ const sections = (trans) => [
 ]
 
 const LinkList = () => {
-    const {t}=useCoreTranslation('common')
+    const {t}=useCoreTranslation('sidebar')
     const renderer=useSlotRenderer();
     return (
         <List>
@@ -45,7 +45,7 @@ const LinkList = () => {
                             viewTransition
                 /*onMouseEnter=''*//*{()=>import('@/admin/features/dashboard')}*/>
                 <ListItemText>
-                    {t('sidebar.sections.dashboard')}
+                    {t('sections.dashboard')}
                 </ListItemText>
             </ListItemButton>
             {renderer.render('admin.sidebar',{trans:t})}

@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type {BuildTarget,PluginPackageMeta} from './types';
+import type {PluginPackageMeta} from './types';
 import type {
     PluginManifest,
     PluginActivationType
-} from '@/core/platform/plugin/types'
+} from '../platform/plugin/types'
 
 /**
  * Reads package.json from the plugin root directory.
@@ -20,13 +20,18 @@ export function readPluginPackage(pluginRoot: string): any {
 }
 
 /**
- * Ensures the target is valid.
+ * Resolves build target from environment variables.
  */
-export function assertBuildTarget(target: string): asserts target is BuildTarget {
-    if (target !== 'admin' && target !== 'client') {
-        throw new Error(`Invalid BUILD_TARGET "${target}". Use "admin" or "client".`);
+export function resolveBuildTarget(env: Record<string, string>): string {
+    const target = env.BUILD_TARGET ?? process.env.BUILD_TARGET ?? 'admin';
+
+    if (!target || !target.trim()) {
+        throw new Error('BUILD_TARGET must be a non-empty string.');
     }
+
+    return target.trim();
 }
+
 
 /**
  * Extracts plugin metadata from package.json.
@@ -74,7 +79,7 @@ export function buildRelativeEntryPath(version: string): string {
  */
 export function createPluginManifest(params: {
     pkg: any;
-    target: BuildTarget;
+    target: string;
     explicitName?: string;
 }): PluginManifest {
     const {pkg, target, explicitName} = params;

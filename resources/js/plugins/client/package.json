@@ -9,10 +9,5 @@
                 "react": "^19.2.4"
             }
         }
-    },
-    "scripts": {
-        "build:admin": "cross-env BUILD_TARGET=admin vite build --config vite.federation.config.ts",
-        "build:client": "cross-env BUILD_TARGET=client vite build --config vite.federation.config.ts",
-        "build": "npm run build:admin && npm run build:client"
     }
 }
