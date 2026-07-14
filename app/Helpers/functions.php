@@ -63,19 +63,27 @@ if (!function_exists('getVersionResponseClass')) {
 /**
  * Returns module federation remote entries for the current environment.
  */
-function latestPluginRemoteEntries(): array
+function latestPluginRemoteEntries($area='admin'): array
 {
+    $remotes=discoverProductionPluginRemoteEntries($area);
     if (App::environment('local')) {
-        return config('module-federation.dev_remotes', []);
+        return array_map(
+            static function (array $remote): array {
+                $remote['entry'] = url($remote['entry']);
+
+                return $remote;
+            },
+            $remotes
+        );
     }
 
-    return discoverProductionPluginRemoteEntries();
+    return $remotes;
 }
 
 /**
  * Discovers latest production plugin remote entries from dist/plugins.
  */
-function discoverProductionPluginRemoteEntries(): array
+function discoverProductionPluginRemoteEntries($area='admin'): array
 {
     $basePath = public_path('dist/plugins');
 
@@ -99,14 +107,13 @@ function discoverProductionPluginRemoteEntries(): array
         });
 
         $latestVersion = $versions[0];
-        $remoteEntry = $pluginDirectory . DIRECTORY_SEPARATOR . $latestVersion . DIRECTORY_SEPARATOR . 'remoteEntry.js';
-
+        $remoteEntry = $pluginDirectory. DIRECTORY_SEPARATOR . $area . DIRECTORY_SEPARATOR . $latestVersion . DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR. 'remoteEntry.js';
         if (!File::exists($remoteEntry)) {
             continue;
         }
 
         $entries[$pluginName] = [
-            'entry' => 'dist/plugins/' . $pluginName . '/' . $latestVersion . '/remoteEntry.js',
+            'entry' => 'dist/plugins/' . $pluginName . '/' . $area.'/' . $latestVersion . '/assets/remoteEntry.js',
             'version' => $latestVersion,
         ];
     }
