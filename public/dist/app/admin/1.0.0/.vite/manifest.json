@@ -1,0 +1,74 @@
+{
+  "_browser-ponyfill-D_o62pm7.esm.js": {
+    "file": "browser-ponyfill-D_o62pm7.esm.js",
+    "name": "browser-ponyfill",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-BWiK-72G.esm.js"
+    ]
+  },
+  "_vendor-BWiK-72G.esm.js": {
+    "file": "vendor-BWiK-72G.esm.js",
+    "name": "vendor"
+  },
+  "node_modules/i18next-browser-languagedetector/dist/esm/i18nextBrowserLanguageDetector.js": {
+    "file": "__federation_shared_i18next-browser-languagedetector-DcLSmZF9.esm.js",
+    "name": "__federation_shared_i18next-browser-languagedetector",
+    "src": "node_modules/i18next-browser-languagedetector/dist/esm/i18nextBrowserLanguageDetector.js",
+    "isEntry": true
+  },
+  "node_modules/i18next/dist/esm/i18next.js": {
+    "file": "__federation_shared_i18next-RisLg1hY.esm.js",
+    "name": "__federation_shared_i18next",
+    "src": "node_modules/i18next/dist/esm/i18next.js",
+    "isEntry": true
+  },
+  "node_modules/react-dom/index.js?commonjs-entry": {
+    "file": "__federation_shared_react-dom-GtiB4q_Z.esm.js",
+    "name": "__federation_shared_react-dom",
+    "src": "node_modules/react-dom/index.js?commonjs-entry",
+    "isEntry": true,
+    "imports": [
+      "_vendor-BWiK-72G.esm.js"
+    ]
+  },
+  "node_modules/react-i18next/dist/es/index.js": {
+    "file": "__federation_shared_react-i18next-BY9LmXLV.esm.js",
+    "name": "__federation_shared_react-i18next",
+    "src": "node_modules/react-i18next/dist/es/index.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor-BWiK-72G.esm.js"
+    ]
+  },
+  "node_modules/react/index.js?commonjs-entry": {
+    "file": "__federation_shared_react-D0OBnIda.esm.js",
+    "name": "__federation_shared_react",
+    "src": "node_modules/react/index.js?commonjs-entry",
+    "isEntry": true,
+    "imports": [
+      "_vendor-BWiK-72G.esm.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "app-M45Yl0IJ.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/admin/main.tsx": {
+    "file": "main-BSmtR2wp.esm.js",
+    "name": "main",
+    "src": "resources/js/admin/main.tsx",
+    "isEntry": true,
+    "imports": [
+      "_vendor-BWiK-72G.esm.js"
+    ],
+    "dynamicImports": [
+      "_browser-ponyfill-D_o62pm7.esm.js"
+    ]
+  }
+}

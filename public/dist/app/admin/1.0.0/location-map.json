@@ -1,0 +1,178 @@
+{
+  "0140652c7127": {
+    "locationId": "0140652c7127",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/plugin/PluginRegistry.ts",
+    "line": 102,
+    "column": 92,
+    "className": "PluginRegistry",
+    "functionName": "boot",
+    "panel": ""
+  },
+  "3944231c8789": {
+    "locationId": "3944231c8789",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/plugin/PluginRegistry.ts",
+    "line": 120,
+    "column": 108,
+    "className": "PluginRegistry",
+    "functionName": "boot",
+    "panel": ""
+  },
+  "f39380f1b9f1": {
+    "locationId": "f39380f1b9f1",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/exporters/BatchSpanExporter.ts",
+    "line": 43,
+    "column": 100,
+    "className": "BatchSpanExporter",
+    "functionName": "export",
+    "panel": ""
+  },
+  "a6a49e55f5cb": {
+    "locationId": "a6a49e55f5cb",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/exporters/BatchSpanExporter.ts",
+    "line": 64,
+    "column": 85,
+    "className": "BatchSpanExporter",
+    "functionName": "flush",
+    "panel": ""
+  },
+  "eb025ee439b6": {
+    "locationId": "eb025ee439b6",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/exporters/FetchSpanExporter.ts",
+    "line": 49,
+    "column": 16,
+    "className": "FetchSpanExporter",
+    "functionName": "export",
+    "panel": ""
+  },
+  "8097495c8cc0": {
+    "locationId": "8097495c8cc0",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/HttpTracer.ts",
+    "line": 82,
+    "column": 112,
+    "className": "HttpTracer",
+    "functionName": "patchFetch",
+    "panel": ""
+  },
+  "56858af0a11e": {
+    "locationId": "56858af0a11e",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/HttpTracer.ts",
+    "line": 146,
+    "column": 108,
+    "className": "HttpTracer",
+    "functionName": "patchXHR",
+    "panel": ""
+  },
+  "82b4bb3576c4": {
+    "locationId": "82b4bb3576c4",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/HttpTracer.ts",
+    "line": 91,
+    "column": 24,
+    "className": "HttpTracer",
+    "functionName": "patchFetch",
+    "panel": ""
+  },
+  "2a57b4377d4e": {
+    "locationId": "2a57b4377d4e",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/HttpTracer.ts",
+    "line": 156,
+    "column": 24,
+    "className": "HttpTracer",
+    "functionName": "patchXHR",
+    "panel": ""
+  },
+  "bf72df244ae3": {
+    "locationId": "bf72df244ae3",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyRegistry.ts",
+    "line": 90,
+    "column": 54,
+    "className": "HotkeyRegistry",
+    "functionName": "register",
+    "panel": ""
+  },
+  "604456a93f57": {
+    "locationId": "604456a93f57",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyManager.ts",
+    "line": 104,
+    "column": 73,
+    "className": "HotkeyManager",
+    "functionName": null,
+    "panel": ""
+  },
+  "0b0fa3e59c58": {
+    "locationId": "0b0fa3e59c58",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 112,
+    "column": 49,
+    "className": "MessageBus",
+    "functionName": "executeCommand",
+    "panel": ""
+  },
+  "2f3f856c2638": {
+    "locationId": "2f3f856c2638",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 138,
+    "column": 47,
+    "className": "MessageBus",
+    "functionName": "executeQuery",
+    "panel": ""
+  },
+  "c29b165c6bf2": {
+    "locationId": "c29b165c6bf2",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 89,
+    "column": 54,
+    "className": "MessageBus",
+    "functionName": "executeEvent",
+    "panel": ""
+  },
+  "db22bb3f4774": {
+    "locationId": "db22bb3f4774",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/i18n/I18nService.ts",
+    "line": 167,
+    "column": 89,
+    "className": "I18nService",
+    "functionName": "ensureLoaded",
+    "panel": ""
+  },
+  "6ea32a3e43ab": {
+    "locationId": "6ea32a3e43ab",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/tracing/Span.ts",
+    "line": 96,
+    "column": 16,
+    "className": "Span",
+    "functionName": "logSlowSpan",
+    "panel": ""
+  }
+}

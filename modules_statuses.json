@@ -4,5 +4,6 @@
     "Core": true,
     "Setting": true,
     "Auth": true,
-    "Verification": true
+    "Verification": true,
+    "Plugin": true
 }
