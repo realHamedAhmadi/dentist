@@ -1,0 +1,56 @@
+{
+  "name": "plugin-order",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "resources/js/plugins/order",
+  "tags": [
+    "type:plugin",
+    "scope:order"
+  ],
+  "targets": {
+    "build-admin": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite build --config vite.config.ts",
+        "cwd": "resources/js/plugins/order",
+        "env": {
+          "BUILD_TARGET": "admin",
+          "PLUGIN_NAME": "order"
+        }
+      }
+    },
+    "dev-admin": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite build --config vite.config.ts --watch",
+        "cwd": "resources/js/plugins/order",
+        "env": {
+          "BUILD_TARGET": "admin",
+          "PLUGIN_NAME": "order"
+        }
+      }
+    },
+    "build-client": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite build --config vite.config.ts",
+        "cwd": "resources/js/plugins/order",
+        "env": {
+          "BUILD_TARGET": "client",
+          "PLUGIN_NAME": "order"
+        }
+      }
+    },
+    "dev-client": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vite build --config vite.config.ts --watch",
+        "cwd": "resources/js/plugins/order",
+        "env": {
+          "BUILD_TARGET": "client",
+          "PLUGIN_NAME": "order"
+        }
+      }
+    }
+  }
+}
