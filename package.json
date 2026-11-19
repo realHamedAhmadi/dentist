@@ -4,6 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "create:project-file": "node scripts/gen-nx-projects.mjs",
         "dev-admin": "cross-env BUILD_TARGET=admin vite",
         "dev": "dev-admin",
         "dev-client": "cross-env BUILD_TARGET=client vite",
