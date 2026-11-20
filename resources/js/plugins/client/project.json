@@ -2,6 +2,7 @@
     "name": "plugin-client",
     "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
+    "implicitDependencies": ["core"],
     "sourceRoot": "resources/js/plugins/client",
     "tags": ["type:plugin", "scope:client"],
     "targets": {
