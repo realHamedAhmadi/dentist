@@ -11,25 +11,46 @@ import ExpandMoreIcon from "@/core/shared/icons/ExpandMore";
 import {Link} from "react-router-dom";
 import React from "react";
 
-type Sections=(trans:any)=>[
-    {
-        title?:string,
-        titleKey?:string,
-        links:[
-            {
-                text?:string,
-                textKey?:string,
-                to:string,
-                component?:any
-            }
-        ]
-    }
-]
+/**
+ * A single navigation link rendered inside a sidebar section.
+ */
+type SidebarLink = {
+    text?: string;
+    textKey?: string;
+    to: string;
+    component?: () => Promise<unknown>;
+};
 
-export const MenuItems = ({sections,trans}:{sections:Sections,trans?:any}) => {
-    return sections(trans).map((section, index) => {
+/**
+ * A collapsible group of navigation links.
+ */
+type SidebarSection = {
+    title?: string;
+    titleKey?: string;
+    links: SidebarLink[];
+};
+
+/**
+ * Resolves sidebar sections using the provided translation function.
+ */
+type Sections = (trans: (key: string) => string) => SidebarSection[];
+
+/**
+ * Props accepted by the sidebar menu renderer.
+ */
+type MenuItemsProps = {
+    sections: Sections;
+    trans?: (key: string) => string;
+};
+
+/**
+ * Renders the sidebar accordion tree from a section resolver.
+ */
+export const MenuItems = ({sections, trans}: MenuItemsProps) => {
+    // Resolve sections once per render using the translation function
+    return sections(trans as (key: string) => string).map((section, index) => {
         return (
-            <Accordion key={index} sx={{boxShadow: 'none'}}>
+            <Accordion key={section.titleKey ?? section.title ?? index} sx={{boxShadow: 'none'}}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                     <Typography>{section.title}</Typography>
                 </AccordionSummary>
@@ -37,10 +58,14 @@ export const MenuItems = ({sections,trans}:{sections:Sections,trans?:any}) => {
                     <List disablePadding>
                         {section.links.map((item) => {
                             return (
-                                <ListItemButton component={Link}
+                                <ListItemButton key={item.to}
+                                                component={Link}
                                                 to={item.to}
                                                 viewTransition
-                                    onMouseEnter={item.component}>
+                                                onMouseEnter={() => {
+                                                    // Preload the route chunk without breaking navigation on failure
+                                                    void item.component?.().catch(() => undefined);
+                                                }}>
                                     <ListItemText>
                                         {item.text}
                                     </ListItemText>
