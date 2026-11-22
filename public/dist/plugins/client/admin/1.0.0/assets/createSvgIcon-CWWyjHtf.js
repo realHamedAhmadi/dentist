@@ -1,0 +1,1 @@
+import{importShared as i}from"./__federation_fn_import-Bw3Ur6eA.js";import{S as e,j as n}from"./SvgIcon-DLVebUXq.js";const o=await i("react");function p(r,c){function t(a,m){return n.jsx(e,{"data-testid":void 0,ref:m,...a,children:r})}return t.muiName=e.muiName,o.memo(o.forwardRef(t))}export{p as c};

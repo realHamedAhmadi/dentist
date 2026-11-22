@@ -21,6 +21,72 @@
     "functionName": "boot",
     "panel": ""
   },
+  "21c178f70202": {
+    "locationId": "21c178f70202",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/service-providers/PluginServiceProvider.ts",
+    "line": 44,
+    "column": 20,
+    "className": "PluginServiceProvider",
+    "functionName": "register",
+    "panel": ""
+  },
+  "0b0fa3e59c58": {
+    "locationId": "0b0fa3e59c58",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 112,
+    "column": 49,
+    "className": "MessageBus",
+    "functionName": "executeCommand",
+    "panel": ""
+  },
+  "2f3f856c2638": {
+    "locationId": "2f3f856c2638",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 138,
+    "column": 47,
+    "className": "MessageBus",
+    "functionName": "executeQuery",
+    "panel": ""
+  },
+  "c29b165c6bf2": {
+    "locationId": "c29b165c6bf2",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
+    "line": 89,
+    "column": 54,
+    "className": "MessageBus",
+    "functionName": "executeEvent",
+    "panel": ""
+  },
+  "bf72df244ae3": {
+    "locationId": "bf72df244ae3",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyRegistry.ts",
+    "line": 90,
+    "column": 54,
+    "className": "HotkeyRegistry",
+    "functionName": "register",
+    "panel": ""
+  },
+  "604456a93f57": {
+    "locationId": "604456a93f57",
+    "module": "core",
+    "moduleVersion": "1.0.0",
+    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyManager.ts",
+    "line": 104,
+    "column": 73,
+    "className": "HotkeyManager",
+    "functionName": null,
+    "panel": ""
+  },
   "f39380f1b9f1": {
     "locationId": "f39380f1b9f1",
     "module": "core",
@@ -96,61 +162,6 @@
     "column": 24,
     "className": "HttpTracer",
     "functionName": "patchXHR",
-    "panel": ""
-  },
-  "bf72df244ae3": {
-    "locationId": "bf72df244ae3",
-    "module": "core",
-    "moduleVersion": "1.0.0",
-    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyRegistry.ts",
-    "line": 90,
-    "column": 54,
-    "className": "HotkeyRegistry",
-    "functionName": "register",
-    "panel": ""
-  },
-  "604456a93f57": {
-    "locationId": "604456a93f57",
-    "module": "core",
-    "moduleVersion": "1.0.0",
-    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/hotkey/HotkeyManager.ts",
-    "line": 104,
-    "column": 73,
-    "className": "HotkeyManager",
-    "functionName": null,
-    "panel": ""
-  },
-  "0b0fa3e59c58": {
-    "locationId": "0b0fa3e59c58",
-    "module": "core",
-    "moduleVersion": "1.0.0",
-    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
-    "line": 112,
-    "column": 49,
-    "className": "MessageBus",
-    "functionName": "executeCommand",
-    "panel": ""
-  },
-  "2f3f856c2638": {
-    "locationId": "2f3f856c2638",
-    "module": "core",
-    "moduleVersion": "1.0.0",
-    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
-    "line": 138,
-    "column": 47,
-    "className": "MessageBus",
-    "functionName": "executeQuery",
-    "panel": ""
-  },
-  "c29b165c6bf2": {
-    "locationId": "c29b165c6bf2",
-    "module": "core",
-    "moduleVersion": "1.0.0",
-    "file": "/E/xampp/htdocs/my-project/my-dentist/resources/js/core/platform/messaging/MessageBus.ts",
-    "line": 89,
-    "column": 54,
-    "className": "MessageBus",
-    "functionName": "executeEvent",
     "panel": ""
   },
   "db22bb3f4774": {

@@ -1,0 +1,13 @@
+{
+  "name": "order",
+  "area": "admin",
+  "version": "1.0.0",
+  "core": "^1.0.0",
+  "entry": "./remoteEntry.js",
+  "dependencies": {
+    "required": {
+      "react": "^19.2.4"
+    }
+  },
+  "activation": "lazy"
+}

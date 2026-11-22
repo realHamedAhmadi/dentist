@@ -8,7 +8,7 @@
         window.__APP__.remoteEntries=@json(latestPluginRemoteEntries())
     </script>
     @viteReactRefresh
-    @vite('resources/js/admin/main.tsx')
+    @vite(['resources/js/admin/main.tsx'],'dist/app/admin/1.0.0')
 </head>
 <body>
 <div id="admin-root"></div>

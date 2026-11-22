@@ -25,3 +25,9 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+
+
+.nx/cache
+.nx/workspace-data
+.nx/migrate-runs

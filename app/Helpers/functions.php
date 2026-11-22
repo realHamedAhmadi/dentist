@@ -61,11 +61,16 @@ if (!function_exists('getVersionResponseClass')) {
 
 
 /**
- * Returns module federation remote entries for the current environment.
+ * Retrieves the latest remote entries for plugins based on the specified area.
+ *
+ * @param string $area
+ * @return array
  */
-function latestPluginRemoteEntries($area='admin'): array
+function latestPluginRemoteEntries(string $area = 'admin'): array
 {
-    $remotes=discoverProductionPluginRemoteEntries($area);
+    $remotes = discoverProductionPluginRemoteEntries($area);
+
+    // Check if the application environment is local to prepend the base URL
     if (App::environment('local')) {
         return array_map(
             static function (array $remote): array {
@@ -81,44 +86,62 @@ function latestPluginRemoteEntries($area='admin'): array
 }
 
 /**
- * Discovers latest production plugin remote entries from dist/plugins.
+ * Discovers the latest production plugin remote entries from the dist/plugins directory.
+ *
+ * @param string $area
+ * @return array
  */
-function discoverProductionPluginRemoteEntries($area='admin'): array
+function discoverProductionPluginRemoteEntries(string $area = 'admin'): array
 {
     $basePath = public_path('dist/plugins');
 
+    // Return empty array if the plugins directory does not exist
     if (!File::isDirectory($basePath)) {
         return [];
     }
 
     $entries = [];
 
+    // Iterate through each plugin directory
     foreach (File::directories($basePath) as $pluginDirectory) {
         $pluginName = basename($pluginDirectory);
-        $versions = array_map('basename', File::directories($pluginDirectory));
+
+        // Target the specific area directory inside the plugin (e.g., plugins/client/admin)
+        $areaPath = $pluginDirectory . DIRECTORY_SEPARATOR . $area;
+        if (!File::isDirectory($areaPath)) {
+            continue;
+        }
+
+        // Retrieve all version directories inside the area path
+        $versions = array_map('basename', File::directories($areaPath));
 
         if (empty($versions)) {
             continue;
         }
 
+        // Sort versions in descending order to get the latest version first
         usort($versions, static function (string $a, string $b): int {
-            // Sort versions in descending order
             return version_compare($b, $a);
         });
 
         $latestVersion = $versions[0];
-        $remoteEntry = $pluginDirectory. DIRECTORY_SEPARATOR . $area . DIRECTORY_SEPARATOR . $latestVersion . DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR. 'remoteEntry.js';
+
+        // Construct the absolute path to the remoteEntry.js file
+        $remoteEntry = $areaPath . DIRECTORY_SEPARATOR . $latestVersion . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'remoteEntry.js';
+
         if (!File::exists($remoteEntry)) {
             continue;
         }
 
+        // Map the discovered plugin remote entry details
         $entries[$pluginName] = [
-            'entry' => 'dist/plugins/' . $pluginName . '/' . $area.'/' . $latestVersion . '/assets/remoteEntry.js',
+            'entry' => 'dist/plugins/' . $pluginName . '/' . $area . '/' . $latestVersion . '/assets/remoteEntry.js',
             'version' => $latestVersion,
         ];
     }
 
     return $entries;
 }
+
 
 
