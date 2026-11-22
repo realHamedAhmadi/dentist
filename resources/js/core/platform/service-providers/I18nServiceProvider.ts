@@ -41,12 +41,5 @@ export class I18nServiceProvider extends ServiceProvider {
      * Initialize runtime i18n behavior.
      */
     async boot(): Promise<void> {
-        const i18nService = await this.app.make(ServiceTokens.I18N_SERVICE)
-        await i18nService.init()
-        i18nService.registerModuleNamespace({
-            module:'core',
-            namespace:'sidebar',
-            basePath:'http://localhost:5173/dist/app/admin/1.0.0'
-        })
     }
 }
