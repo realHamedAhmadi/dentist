@@ -6,6 +6,7 @@ import {
     SlotExtension,
 } from "@/core/platform/slot/types";
 import {SLOT_RENDERER} from "@/core/platform/tokens/slot";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 /**
  * Facade for slot registry and slot rendering operations.
@@ -16,7 +17,7 @@ export class Slot {
      */
     private static registry(): SlotRegistry {
         // Resolve the registry from the container to keep lifecycle controlled by DI.
-        return getApp().make<SlotRegistry>(SlotRegistry);
+        return getApp().make<SlotRegistry>(ServiceTokens.SLOT_REGISTRY);
     }
 
     /**

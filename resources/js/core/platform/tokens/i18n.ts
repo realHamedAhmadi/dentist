@@ -1,6 +1,6 @@
 import {I18nNamespaceLoadFailedPayload} from "@/core/i18n/types";
 
-export const I18N=Symbol('I18N')
+export const I18N='I18N';
 
 export const I18nEvents={
     I18nLangChanged:'i18n.language.changed',

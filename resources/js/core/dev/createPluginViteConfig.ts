@@ -30,11 +30,18 @@ type PluginViteConfigContext = {
 };
 
 const defaultShared: Record<string, SharedDependencyConfig> = {
+    '@app/core': { singleton: true, requiredVersion: false },
     react: { singleton: true, requiredVersion: false },
     'react-dom': { singleton: true, requiredVersion: false },
+    'react-router': { singleton: true, requiredVersion: false },
+    'react-router-dom': { singleton: true, requiredVersion: false },
+    'react-router-dom': { singleton: true, requiredVersion: false },
     i18next: { singleton: true, requiredVersion: false },
     'react-i18next': { singleton: true, requiredVersion: false },
     'i18next-browser-languagedetector': { singleton: true, requiredVersion: false },
+    '@mui/material': { singleton: true, requiredVersion: false },
+    '@emotion/react': { singleton: true, requiredVersion: false },
+    '@emotion/styled': { singleton: true, requiredVersion: false },
 };
 
 /**
@@ -88,6 +95,7 @@ export function createPluginViteConfig(pluginRootDir:string,options: PluginViteC
                 ...defaultShared,
                 ...(options.shared ?? {}),
             },
+
         });
 
         const finalConfig: UserConfig = {
@@ -106,6 +114,7 @@ export function createPluginViteConfig(pluginRootDir:string,options: PluginViteC
             resolve: {
                 alias: {
                     '@': path.resolve(pluginRootDir, '../../'),
+                    '@app/core': path.resolve(pluginRootDir, '../../core'),
                 },
             },
         };

@@ -12,6 +12,7 @@ import {
 } from '@/core/i18n/useTranslation.cache'
 import { loadCurrentLanguage } from '@/core/i18n/useTranslation.bridge'
 import {getApp} from "@/core/platform/application/appInstance";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 /**
  * Read current language with Suspense semantics.
@@ -72,7 +73,7 @@ async function loadTranslation(
         throw new Error('Application container is not available')
     }
 
-    const i18n = await app.make(I18nService)
+    const i18n = await app.make(ServiceTokens.I18N_SERVICE)
     const result = await i18n.useTranslation(signature, buildServiceOptions(lang, options))
 
     return { t: result.t }

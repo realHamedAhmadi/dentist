@@ -6,7 +6,6 @@ import {router} from '@/admin/route'
 import {Spinner,ErrorFallback} from '@/core/shared/components'
 import {AppThemeProvider} from "@/core/shared/providers";
 import {OverlayProvider} from "@/core/shared/adaptive/overlay/OverlayProvider";
-import {useApp} from "@/admin/AppContext";
 import {useAppStore} from "@/core/shared/store/useAppStore";
 
 

@@ -22,18 +22,31 @@ export class Application extends Container implements IApplication {
         this.plugins = this.make(PluginRegistry);
     }
 
-    bootstrap(): void {
-        setApp(this)
+    /**
+     * Bootstrap the application by registering and booting providers sequentially.
+     */
+    async bootstrap(): Promise<void> {
+        setApp(this);
         this.registerConfiguredProviders();
-        const providers = new Set();
-        this.providers.forEach((p) => {
-            const instance = new p(this);
-            providers.add(instance);
-            instance.register();
-        });
 
-        providers.forEach(p => p.boot?.());
+        // Use a Set to ensure provider uniqueness and maintain insertion order
+        const providers = new Set();
+
+        // Sequentially register providers to respect temporal dependency constraints
+        for (const Provider of this.providers) {
+            const instance = new Provider(this);
+            providers.add(instance);
+            await instance.register();
+        }
+
+        // Sequentially boot providers to ensure all dependencies are initialized
+        for (const provider of providers) {
+            if (typeof provider.boot === 'function') {
+                await provider.boot();
+            }
+        }
     }
+
 
     register(provider: ServiceProviderConstructor): void {
         this.providers.add(provider);

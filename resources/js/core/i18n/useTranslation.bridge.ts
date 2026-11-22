@@ -13,6 +13,7 @@ import {
     setLanguageBridgeBindingPromise,
     setLanguageBridgeBound,
 } from '@/core/i18n/useTranslation.cache'
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 /**
  * Attach to i18n language-changed event through EventBus.
@@ -60,7 +61,7 @@ export async function ensureLanguageChangeBridge(): Promise<void> {
             throw new Error('Application container is not available')
         }
 
-        const eventBus = await app.make(EventBus)
+        const eventBus = await app.make(ServiceTokens.EVENT_BUS)
 
         attachLanguageChangedListener(eventBus, (payload) => {
             // Replace all cached translations after active language changes
@@ -92,7 +93,7 @@ export async function loadCurrentLanguage(): Promise<string> {
         throw new Error('Application container is not available')
     }
 
-    const i18n = await app.make(I18nService)
+    const i18n = await app.make(ServiceTokens.I18N_SERVICE)
 
     await ensureLanguageChangeBridge()
 

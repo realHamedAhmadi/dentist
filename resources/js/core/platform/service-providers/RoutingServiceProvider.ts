@@ -1,11 +1,12 @@
 import {ServiceProvider} from "@/core/platform/service-providers/ServiceProvider";
 import str from "@/core/shared/utils/string"
 import {Router} from "@/core/platform/router/Router";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class RoutingServiceProvider extends ServiceProvider {
 
     register(): void {
-        this.app.singleton(Router, Router);
+        this.app.singleton(ServiceTokens.ROUTER, Router);
         /*const router = this.app.make(Router);
 
         const modules = import.meta.glob(

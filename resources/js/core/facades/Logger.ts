@@ -1,10 +1,10 @@
 import {Facade} from "@/core/facades/Facade";
-import {Logger as MainLogger} from "@/core/logger/Logger";
 import {ILogger, LogLevel} from "@/core/logger/types";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class Logger extends Facade {
     protected static getToken() {
-        return MainLogger
+        return ServiceTokens.LOGGER
     }
 
     static log(level: LogLevel, message: string, option?: object): void {

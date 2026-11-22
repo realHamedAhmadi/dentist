@@ -1,9 +1,9 @@
 import {Facade} from "@/core/facades/Facade";
-import {EventBus} from "@/core/platform/event/EventBus";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class Event extends Facade {
     protected static getToken() {
-        return EventBus
+        return ServiceTokens.EVENT_BUS
     }
 
     static on(event: string, handler: Function) {

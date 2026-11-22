@@ -2,11 +2,12 @@ import { Facade } from "@/core/facades/Facade"
 import { Tracer as MainTracer } from "@/core/tracing/Tracer"
 import type { ISpanContext, ISpanRecord } from "@/core/tracing/types"
 import type { Span } from "@/core/tracing/span"
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class Tracer extends Facade {
 
     protected static getToken() {
-        return MainTracer
+        return ServiceTokens.TRACER
     }
 
     // Start a new span

@@ -1,9 +1,4 @@
 import { ServiceProvider } from "@/core/platform/service-providers/ServiceProvider";
-import {
-    __federation_method_setRemote as setRemote,
-    __federation_method_getRemote as getRemote,
-    __federation_method_unwrapDefault as unwrapDefault,
-} from "virtual:__federation__";
 import { resolveDevServerPort } from "@/core/shared/utils/helper";
 import { isProd } from "@/core/config/env";
 import {Logger} from "@/core/facades/Logger";
@@ -14,6 +9,9 @@ type RemoteEntryConfig = {
 };
 
 export class PluginServiceProvider extends ServiceProvider {
+    boot?(): void {
+
+    }
     /**
      * Register local and remote plugin service providers.
      */
@@ -27,15 +25,14 @@ export class PluginServiceProvider extends ServiceProvider {
             if (!isProd()) {
                 url = url.replace("{port}", this.getPort(pluginName).toString());
             }
-            setRemote(pluginName, {
+            window.__federation__.setRemote(pluginName, {
                 url,
                 format: "esm",
                 from: "vite",
             });
 
-            const remoteModule = await getRemote(pluginName, "./serviceProvider");
+            const remoteModule = await window.__federation__.getRemote(pluginName, "./serviceProvider");
             const provider = this.resolveProviderExport(remoteModule);
-            console.log(provider)
             if (!provider) {
                 Logger.channel('PluginServiceProvider:register').error(`Remote provider export is invalid for plugin "${pluginName}"`, {
                     pluginName,
@@ -45,7 +42,6 @@ export class PluginServiceProvider extends ServiceProvider {
                 });
                 continue;
             }
-
             this.app.register(provider);
         }
     }
@@ -54,7 +50,7 @@ export class PluginServiceProvider extends ServiceProvider {
      * Resolve the service provider class from a remote federation module.
      */
     protected resolveProviderExport(remoteModule: unknown): any {
-        const unwrapped = unwrapDefault(remoteModule as any);
+        const unwrapped = window.__federation__.unwrapDefault(remoteModule as any);
 
         if (typeof unwrapped === "function") {
             return unwrapped;

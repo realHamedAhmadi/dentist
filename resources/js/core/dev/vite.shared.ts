@@ -5,7 +5,7 @@ import federation from '@originjs/vite-plugin-federation';
 import sirv from 'sirv';
 import type { PluginManifest } from '../../core/platform/plugin/types';
 import locationPlugin from './vite-location-plugin';
-import __dirname from "@/plugins/client/vite.config";
+import react from '@vitejs/plugin-react';
 
 const federationBuildEntry = 'virtual:federation-build-entry';
 const resolvedFederationBuildEntry = `\0${federationBuildEntry}`;
@@ -135,6 +135,10 @@ export function createFederatedPluginConfig(params: {
         },
 
         plugins: [
+            react({
+                jsxRuntime: "automatic",
+                jsxImportSource: "react",
+            }),
             federationBuildEntryPlugin(),
             locationPlugin(),
             copyLocalFolder(`${pluginRootDir}/${target}`,outDirAbs),

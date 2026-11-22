@@ -1,1 +1,1 @@
-export const SLOT_RENDERER = Symbol("SLOT_RENDERER");
+export const SLOT_RENDERER = 'SLOT_RENDERER';

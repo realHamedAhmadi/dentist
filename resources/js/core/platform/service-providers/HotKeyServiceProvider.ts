@@ -16,9 +16,9 @@ import {SequenceMiddleware} from "@/core/platform/hotkey/middlewares/SequenceMid
 import {SingleHotkeyMiddleware} from "@/core/platform/hotkey/middlewares/SingleHotkeyMiddleware";
 import {ExecuteMiddleware} from "@/core/platform/hotkey/middlewares/ExecuteMiddleware";
 import {HotkeyActionInvoker} from "@/core/platform/hotkey/HotkeyActionInvoker";
-import {PipelineFactory} from "@/core/pipeline/PipelineFactory";
 import {HotkeyHintService} from "@/core/platform/hotkey/HotkeyHintService";
 import {HotkeyHintEngine} from "@/core/platform/hotkey/HotkeyHintEngine";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class HotKeyServiceProvider extends ServiceProvider {
     private hotKeyPolicy: IHotkeyPolicy = {
@@ -35,8 +35,8 @@ export class HotKeyServiceProvider extends ServiceProvider {
         this.app.singleton(HotkeyScopeStack,HotkeyScopeStack);
         this.app.singleton(HotkeyActionInvoker,()=>
             new HotkeyActionInvoker(
-                this.app.make(CommandBus),
-                this.app.make(EventBus),
+                this.app.make(ServiceTokens.COMMAND_BUS),
+                this.app.make(ServiceTokens.EVENT_BUS),
                 this.app
             )
         )
@@ -45,7 +45,7 @@ export class HotKeyServiceProvider extends ServiceProvider {
         this.app.singleton(HotkeyHintService,()=>
             new HotkeyHintService(
                 new HotkeyHintEngine(this.app.make(HotkeyRegistry)),
-                this.app.make(EventBus)
+                this.app.make(ServiceTokens.EVENT_BUS)
             )
         )
         this.app.singleton(HotkeyResolver,()=>
@@ -54,18 +54,18 @@ export class HotKeyServiceProvider extends ServiceProvider {
         this.app.singleton(HotkeySequenceEngine,()=>
             new HotkeySequenceEngine(
                 this.app.make(HotkeyRegistry),
-                this.app.make(EventBus)
+                this.app.make(ServiceTokens.EVENT_BUS)
             )
         );
         this.app.singleton(HotkeyRecordingEngine,()=>
             new HotkeyRecordingEngine(
-                this.app.make(EventBus)
+                this.app.make(ServiceTokens.EVENT_BUS)
             )
         );
         this.app.singleton(HotkeyManager,()=>{
             const manager=new HotkeyManager(
-                this.app.make(EventBus),
-                this.app.make(PipelineFactory),
+                this.app.make(ServiceTokens.EVENT_BUS),
+                this.app.make(ServiceTokens.PIPELINE_FACTORY),
                 this.app.make(HotkeyActionInvoker),
                 this.app.make(HotkeyHintService),
             )

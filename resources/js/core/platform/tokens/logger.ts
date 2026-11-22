@@ -1,2 +1,2 @@
-export const LOGGER_STRATEGY=Symbol('LOGGER_STRATEGY');
-export const DEV_LOGGER=Symbol('DEV_LOGGER');
+export const LOGGER_STRATEGY='LOGGER_STRATEGY';
+export const DEV_LOGGER='DEV_LOGGER';

@@ -1,10 +1,9 @@
 import {ServiceProvider} from "@/core/platform/service-providers/ServiceProvider";
-import {Router} from "@/core/facades/Router";
+import {Router} from "@app/core";
+
 import routes from "@/plugins/client/admin/routes";
-import {SlotRegistry} from "@/core/platform/slot/SlotRegistry";
 import {clientAdminSidebar} from "@/plugins/client/admin/extensions/clientAdminSidebar";
-import {CommandBus} from "@/core/platform/command/CommandBus";
-import {I18nService} from "@/core/i18n/I18nService";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export default class PluginAdminServiceProvider extends ServiceProvider {
     register(): void {
@@ -12,18 +11,19 @@ export default class PluginAdminServiceProvider extends ServiceProvider {
     }
 
     async boot() {
-        console.log(SlotRegistry,CommandBus,I18nService)
         Router.addRoutes(routes)
-        this.app.make(SlotRegistry).extend('admin.sidebar',clientAdminSidebar)
+        this.app.make(ServiceTokens.SLOT_REGISTRY).extend('admin.sidebar',clientAdminSidebar)
 
-        this.app.make(CommandBus).register('entity.create',()=>{
+        this.app.make(ServiceTokens.COMMAND_BUS).register('entity.create',()=>{
             console.log('command is handler..........................................')
         })
-        const i18nService=await this.app.make(I18nService);
+
+        const i18nService=await this.app.make(ServiceTokens.I18N_SERVICE);
         i18nService.registerModuleNamespace({
-            module:'client',
-            namespace:'common',
-            basePath:'http://localhost:5173/dist/app/1.0.0/'
+            module:'admin@client',
+            namespace:'sidebar',
+            basePath:'http://localhost:8000/dist/plugins/client/admin/1.0.0/'
         })
+        //console.log('sssssssssssssssssssssssssssssssssssss',ServiceTokens.SLOT_REGISTRY)
     }
 }

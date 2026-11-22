@@ -4,6 +4,7 @@ import {NotFound} from '@/core/shared/components/error'
 import {Router} from "@/core/platform/router/Router";
 import {IApplication} from "@/core/platform/application/types";
 import {RouteObject} from "react-router-dom";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 export const createRouter=(app:IApplication)=>{
 
     return createBrowserRouter([
@@ -11,7 +12,7 @@ export const createRouter=(app:IApplication)=>{
             path:'/admin',
             element:<LayoutRegistry/>,
             children:[
-                ...app.make(Router).getRoutes() as RouteObject
+                ...app.make(ServiceTokens.ROUTER).getRoutes() as RouteObject
                 /* {
                      index:true,
                      element:<Navigate to="dashboard" replace/>

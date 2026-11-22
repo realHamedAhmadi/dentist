@@ -1,5 +1,5 @@
-import {useTranslation} from "@/core/shared/hooks/translation/useTranslation";
+import {useTranslation} from "@app/core";
 
-export function useClientTranslation(signature: string) {
-    return useTranslation(`client:${signature}`);
+export function useClientTranslation(signature: string,target:string='admin') {
+    return useTranslation(`${target}@client:${signature}`);
 }

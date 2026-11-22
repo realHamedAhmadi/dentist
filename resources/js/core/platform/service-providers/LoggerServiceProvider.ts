@@ -13,6 +13,7 @@ import {ILogger} from "@/core/logger/types";
 import {PipelineFactory} from "@/core/pipeline/PipelineFactory";
 import {PerformanceLoggerMiddleware} from "@/core/logger/middlewares/PerformanceLoggerMiddleware";
 import {RedactSensitiveDataMiddleware} from "@/core/logger/middlewares/RedactSensitiveDataMiddleware";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class LoggerServiceProvider extends ServiceProvider {
     register(): void {
@@ -37,7 +38,7 @@ export class LoggerServiceProvider extends ServiceProvider {
             const transports = this.app.make(LoggerTransportResolver).resolve();
             const logger = new Logger(
                 transports,
-                this.app.make(PipelineFactory)
+                this.app.make(ServiceTokens.PIPELINE_FACTORY)
             );
             this.setMiddlewares(logger);
             return logger;
@@ -54,7 +55,7 @@ export class LoggerServiceProvider extends ServiceProvider {
 
             return new Logger(
                 resolver.resolve(),
-                this.app.make(PipelineFactory)
+                this.app.make(ServiceTokens.PIPELINE_FACTORY)
             );
         });
 

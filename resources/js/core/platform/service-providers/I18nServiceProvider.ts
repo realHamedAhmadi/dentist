@@ -2,13 +2,13 @@ import {I18nService} from '@/core/i18n/I18nService'
 import {I18N} from "@/core/platform/tokens/i18n";
 import {createI18n} from "@/core/i18n/createI18n";
 import {ServiceProvider} from "@/core/platform/service-providers/ServiceProvider";
-import {EventBus} from "@/core/platform/event/EventBus";
 import {TailTemplateUrlResolver} from "@/core/i18n/TailTemplateUrlResolver";
 import {MemoryTtlCache} from "@/core/i18n/MemoryTtlCache";
 import {ExponentialBackoffRetryExecutor} from "@/core/i18n/ExponentialBackoffRetryExecutor";
 import {InMemoryModuleNamespaceRegistry} from "@/core/i18n/InMemoryModuleNamespaceRegistry";
 import {CachedRetryResourceLoader} from "@/core/i18n/CachedRetryResourceLoader";
 import {FetchI18nBackend} from "@/core/i18n/FetchI18nBackend";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 
 export class I18nServiceProvider extends ServiceProvider {
     /**
@@ -24,13 +24,13 @@ export class I18nServiceProvider extends ServiceProvider {
         this.app.singleton(I18N, async () => {
             return await createI18n()
         })
-        this.app.singleton(I18nService, async () => {
+        this.app.singleton(ServiceTokens.I18N_SERVICE, async () => {
             const i18n = await this.app.make(I18N)
             return new I18nService(
                 i18n,
                 registry,
                 loader,
-                this.app.make(EventBus),
+                this.app.make(ServiceTokens.EVENT_BUS),
                 this.app,
                 'app.lang'
             )
@@ -41,7 +41,7 @@ export class I18nServiceProvider extends ServiceProvider {
      * Initialize runtime i18n behavior.
      */
     async boot(): Promise<void> {
-        const i18nService = await this.app.make(I18nService)
+        const i18nService = await this.app.make(ServiceTokens.I18N_SERVICE)
         await i18nService.init()
         i18nService.registerModuleNamespace({
             module:'core',

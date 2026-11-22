@@ -104,26 +104,18 @@ export default defineConfig(({ mode }) => {
                     __dev_placeholder__: '', // Workaround for federation dev runtime initialization
                 },
                 shared: {
-                    react: {
-                        singleton: true,
-                        requiredVersion: false,
-                    },
-                    'react-dom': {
-                        singleton: true,
-                        requiredVersion: false,
-                    },
-                    i18next: {
-                        singleton: true,
-                        requiredVersion: false,
-                    },
-                    'react-i18next': {
-                        singleton: true,
-                        requiredVersion: false,
-                    },
-                    'i18next-browser-languagedetector': {
-                        singleton: true,
-                        requiredVersion: false,
-                    },
+                    '@app/core': { singleton: true, requiredVersion: false },
+                    react: { singleton: true, requiredVersion: false },
+                    'react-dom': { singleton: true, requiredVersion: false },
+                    'react-router': { singleton: true, requiredVersion: false },
+                    'react-router-dom': { singleton: true, requiredVersion: false },
+                    'react-router-dom': { singleton: true, requiredVersion: false },
+                    i18next: { singleton: true, requiredVersion: false },
+                    'react-i18next': { singleton: true, requiredVersion: false },
+                    'i18next-browser-languagedetector': { singleton: true, requiredVersion: false },
+                    '@mui/material': { singleton: true, requiredVersion: false },
+                    '@emotion/react': { singleton: true, requiredVersion: false },
+                    '@emotion/styled': { singleton: true, requiredVersion: false },
                 },
             }),
         ],
@@ -131,6 +123,7 @@ export default defineConfig(({ mode }) => {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'resources/js'),
+                '@app/core': path.resolve(__dirname, 'resources/js/core'),
             },
         },
 
@@ -150,7 +143,7 @@ export default defineConfig(({ mode }) => {
 
         build: {
             outDir,
-            manifest:true,
+            manifest: 'manifest.json',
             emptyOutDir: true,
             copyPublicDir: false,
             target: 'esnext',

@@ -1,4 +1,5 @@
 import {ServiceProvider} from "@/core/platform/service-providers/ServiceProvider";
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken"
 import {EventRegistry} from "@/core/platform/event/EventRegistry";
 import {CommandRegistry} from "@/core/platform/command/CommandRegistry";
 import {QueryRegistry} from "@/core/platform/query/QueryRegistry";
@@ -6,41 +7,42 @@ import {MessageBus} from "@/core/platform/messaging/MessageBus";
 import {EventBus} from "@/core/platform/event/EventBus";
 import {CommandBus} from "@/core/platform/command/CommandBus";
 import {QueryBus} from "@/core/platform/query/QueryBus";
-import {PipelineFactory} from "@/core/pipeline/PipelineFactory";
-import {MessageLoggingMiddleware} from "@/core/platform/messaging/middlewares/MessageLoggingMiddleware";
 
 export class CoreMessagingServiceProvider extends ServiceProvider {
-    register(): void {
-        this.app.singleton(EventRegistry, EventRegistry);
-        this.app.singleton(CommandRegistry, CommandRegistry);
-        this.app.singleton(QueryRegistry, QueryRegistry);
+    boot?(): void {
 
-        this.app.singleton(MessageBus, () => {
+    }
+    register(): void {
+        this.app.singleton(ServiceTokens.EVENT_REGISTRY, EventRegistry);
+        this.app.singleton(ServiceTokens.COMMAND_REGISTRY, CommandRegistry);
+        this.app.singleton(ServiceTokens.QUERY_REGISTRY, QueryRegistry);
+
+        this.app.singleton(ServiceTokens.MESSAGE_BUS, () => {
             const message = new MessageBus(
-                this.app.make(EventRegistry),
-                this.app.make(CommandRegistry),
-                this.app.make(QueryRegistry),
-                this.app.make(PipelineFactory)
+                this.app.make(ServiceTokens.EVENT_REGISTRY),
+                this.app.make(ServiceTokens.COMMAND_REGISTRY),
+                this.app.make(ServiceTokens.QUERY_REGISTRY),
+                this.app.make(ServiceTokens.PIPELINE_FACTORY)
             );
             this.setMiddlewares(message);
             return message;
         });
-        this.app.singleton(EventBus, () =>
+        this.app.singleton(ServiceTokens.EVENT_BUS, () =>
             new EventBus(
-                this.app.make(MessageBus),
-                this.app.make(EventRegistry)
+                this.app.make(ServiceTokens.MESSAGE_BUS),
+                this.app.make(ServiceTokens.EVENT_REGISTRY)
             )
         );
-        this.app.singleton(CommandBus, () =>
+        this.app.singleton(ServiceTokens.COMMAND_BUS, () =>
             new CommandBus(
-                this.app.make(MessageBus),
-                this.app.make(CommandRegistry)
+                this.app.make(ServiceTokens.MESSAGE_BUS),
+                this.app.make(ServiceTokens.COMMAND_REGISTRY)
             )
         );
-        this.app.singleton(QueryBus, () =>
+        this.app.singleton(ServiceTokens.QUERY_BUS, () =>
             new QueryBus(
-                this.app.make(MessageBus),
-                this.app.make(QueryRegistry)
+                this.app.make(ServiceTokens.MESSAGE_BUS),
+                this.app.make(ServiceTokens.QUERY_REGISTRY)
             )
         );
     }

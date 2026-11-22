@@ -1,9 +1,9 @@
 import {RouteDefinition } from "@/core/platform/router/types";
 import {Facade} from "@/core/facades/Facade";
-import {Router as MainRouter} from '@/core/platform/router/Router';
+import {ServiceTokens} from "@/core/platform/tokens/ServiceToken";
 export class Router extends Facade{
     protected static getToken() {
-        return MainRouter
+        return ServiceTokens.ROUTER
     }
     static addRoute(route: RouteDefinition): void {
         this.resolve().addRoute(route);
