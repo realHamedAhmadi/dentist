@@ -16,6 +16,7 @@ import {i18n} from '@/core/shared/providers';
 import {useAppStore} from "@/core/shared/store/useAppStore";
 
 import {Application} from "@/core/platform/application/Application";
+import AdminServiceProvider from "@/admin/AdminServiceProvider";
 
 
 // Expose to global scope for core package to use
@@ -33,6 +34,7 @@ async function startApp() {
     const root = createRoot(rootElement);
     root.render(<Spinner/>);
     const app=new Application('admin');
+    app.register(AdminServiceProvider)
     await app.bootstrap();
     useAppStore.getState().setApp(app);
 

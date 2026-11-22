@@ -24,6 +24,5 @@ export default class PluginAdminServiceProvider extends ServiceProvider {
             namespace:'sidebar',
             basePath:'http://localhost:8000/dist/plugins/client/admin/1.0.0/'
         })
-        //console.log('sssssssssssssssssssssssssssssssssssss',ServiceTokens.SLOT_REGISTRY)
     }
 }

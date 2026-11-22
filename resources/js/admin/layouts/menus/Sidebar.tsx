@@ -7,7 +7,7 @@ import {Typography} from "@mui/material";
 import {Accordion, AccordionSummary, AccordionDetails} from "@mui/material";
 import ExpandMoreIcon from "@/core/shared/icons/ExpandMore";
 import {useSlotRenderer} from "@/core/shared/hooks/useSlotRenderer";
-import {useCoreTranslation} from "@/core/shared/hooks/translation/useCoreTranslation";
+import {useAdminTranslation} from "@/admin/hooks/useAdminTranslation";
 
 const sections = (trans) => [
     /* {
@@ -37,7 +37,7 @@ const sections = (trans) => [
 ]
 
 const LinkList = () => {
-    const {t}=useCoreTranslation('sidebar')
+    const {t}=useAdminTranslation('sidebar')
     const renderer=useSlotRenderer();
     return (
         <List>
