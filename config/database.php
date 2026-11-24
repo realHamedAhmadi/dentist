@@ -112,6 +112,36 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        // Landlord: Central SaaS database (tenants table, saas_owners, core data)
+        'landlord' => [
+            'driver'    => env('DB_DRIVER', 'mysql'),
+            'host'      => env('DB_HOST', '127.0.0.1'),
+            'port'      => env('DB_PORT', '3306'),
+            'database'  => env('DB_LANDLORD_DATABASE', 'dentist_landlord'),
+            'username'  => env('DB_LANDLORD_USERNAME', 'root'),
+            'password'  => env('DB_LANDLORD_PASSWORD', ''),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+            'strict'    => true,
+            'engine'    => null,
+        ],
+
+        // Tenant: Dynamically switched per-request; database name set by TenantFinder
+        'tenant' => [
+            'driver'    => env('DB_DRIVER', 'mysql'),
+            'host'      => env('DB_HOST', '127.0.0.1'),
+            'port'      => env('DB_PORT', '3306'),
+            'database'  => null, // Filled at runtime by SwitchTenantDatabase task
+            'username'  => env('DB_TENANT_USERNAME', 'root'),
+            'password'  => env('DB_TENANT_PASSWORD', ''),
+            'charset'   => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix'    => '',
+            'strict'    => true,
+            'engine'    => null,
+        ],
+
     ],
 
     /*

@@ -27,6 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->api(append: [
             ResolveApiVersion::class,
+            // Resolve and activate the tenant for every API request
+            \Spatie\Multitenancy\Http\Middleware\EnsureValidTenantSession::class,
+            \Spatie\Multitenancy\Http\Middleware\NeedsTenant::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

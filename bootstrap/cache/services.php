@@ -34,9 +34,10 @@
     30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     31 => 'Termwind\\Laravel\\TermwindServiceProvider',
     32 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
-    33 => 'Spatie\\Permission\\PermissionServiceProvider',
-    34 => 'Spatie\\RouteAttributes\\RouteAttributesServiceProvider',
-    35 => 'App\\Providers\\AppServiceProvider',
+    33 => 'Spatie\\Multitenancy\\MultitenancyServiceProvider',
+    34 => 'Spatie\\Permission\\PermissionServiceProvider',
+    35 => 'Spatie\\RouteAttributes\\RouteAttributesServiceProvider',
+    36 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -58,9 +59,10 @@
     15 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     16 => 'Termwind\\Laravel\\TermwindServiceProvider',
     17 => 'Nwidart\\Modules\\LaravelModulesServiceProvider',
-    18 => 'Spatie\\Permission\\PermissionServiceProvider',
-    19 => 'Spatie\\RouteAttributes\\RouteAttributesServiceProvider',
-    20 => 'App\\Providers\\AppServiceProvider',
+    18 => 'Spatie\\Multitenancy\\MultitenancyServiceProvider',
+    19 => 'Spatie\\Permission\\PermissionServiceProvider',
+    20 => 'Spatie\\RouteAttributes\\RouteAttributesServiceProvider',
+    21 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
