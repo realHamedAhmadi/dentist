@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Auth\Tests\Feature\Services\Auth\Providers;
+namespace Modules\Auth\Tests\Feature\Services\Providers;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
+use Modules\Auth\DTO\TokenProviderResult;
 use Modules\Auth\Services\Providers\SanctumTokenProvider;
 use Modules\User\Models\User;
 use Tests\TestCase;
@@ -13,7 +13,7 @@ class SanctumTokenProviderTest extends TestCase
 {
     use DatabaseTransactions;
 
-    protected SanctumTokenProvider $provider;
+    private SanctumTokenProvider $provider;
 
     protected function setUp(): void
     {
@@ -21,73 +21,69 @@ class SanctumTokenProviderTest extends TestCase
         $this->provider = new SanctumTokenProvider();
     }
 
-    /** @test */
-    public function it_issues_a_token_with_default_name()
+    public function test_it_issues_a_token_with_default_name(): void
     {
         $user = User::factory()->create();
 
         $result = $this->provider->issueFor($user);
 
-        $this->assertIsArray($result);
-        $this->assertEquals('token', $result['type']);
-        $this->assertIsString($result['token']);
+        // Result must be a TokenProviderResult DTO, not a plain array
+        $this->assertInstanceOf(TokenProviderResult::class, $result);
 
-        // Token must exist in the DB
-        $this->assertDatabaseHas('personal_access_tokens', [
-            'tokenable_id' => $user->id,
-            'name' => 'api-token'
-        ]);
-    }
+        $data = $result->toArray();
 
-    /** @test */
-    public function it_issues_a_token_with_custom_name()
-    {
-        $user = User::factory()->create();
-
-        $result = $this->provider->issueFor($user, [
-            'token_name' => 'mobile'
-        ]);
-
-        $this->assertEquals('token', $result['type']);
+        // DTO key is 'driver', value is 'sanctum'
+        $this->assertEquals('sanctum', $data['driver']);
+        $this->assertIsString($data['token']);
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'tokenable_id' => $user->id,
-            'name' => 'mobile'
+            'name'         => 'api-token',
         ]);
     }
 
-    /** @test */
-    public function it_revokes_current_token()
+    public function test_it_issues_a_token_with_custom_name(): void
     {
         $user = User::factory()->create();
 
-        // Issue token manually
+        $result = $this->provider->issueFor($user, ['token_name' => 'mobile']);
+
+        $this->assertInstanceOf(TokenProviderResult::class, $result);
+        $this->assertDatabaseHas('personal_access_tokens', [
+            'tokenable_id' => $user->id,
+            'name'         => 'mobile',
+        ]);
+    }
+
+    public function test_it_revokes_current_token(): void
+    {
+        $user  = User::factory()->create();
         $token = $user->createToken('device');
 
-        // Sanctum needs authenticated user to identify current token
+        // Authenticate via Sanctum so currentAccessToken() is populated
+        Sanctum::actingAs($user);
+
+        // Assign the actual access token model to the user instance
         $user->withAccessToken($token->accessToken);
 
         $result = $this->provider->revokeFor($user);
 
         $this->assertTrue($result);
 
-        // Token should be deleted
+        // The token row must be deleted from personal_access_tokens
         $this->assertDatabaseMissing('personal_access_tokens', [
             'tokenable_id' => $user->id,
-            'name' => 'device'
+            'name'         => 'device',
         ]);
     }
 
-    /** @test */
-    public function revoke_returns_true_even_if_no_token_exists()
+    public function test_revoke_returns_true_even_if_no_token_exists(): void
     {
+        // User without an active token — revokeFor must not throw and must return true
         $user = User::factory()->create();
-
-        Sanctum::actingAs($user);
 
         $result = $this->provider->revokeFor($user);
 
         $this->assertTrue($result);
     }
 }
-
