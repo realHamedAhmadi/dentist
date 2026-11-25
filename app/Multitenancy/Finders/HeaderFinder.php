@@ -4,10 +4,10 @@ namespace App\Multitenancy\Finders;
 
 use App\Models\Tenant;
 use Illuminate\Http\Request;
-use Spatie\Multitenancy\Contracts\FindsTenants;
+use Spatie\Multitenancy\TenantFinder\TenantFinder;
 use Spatie\Multitenancy\Models\Tenant as BaseTenant;
 
-class HeaderFinder implements FindsTenants
+class HeaderFinder extends TenantFinder
 {
     // Header name used by SPA/API clients that cannot set a subdomain
     public const HEADER = 'X-Tenant-ID';
